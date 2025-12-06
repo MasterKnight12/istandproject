@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freshman Survival Guide | UNO Experience</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary-color: #d00000; /* UNO Red-ish Tone */
+            --dark-bg: #2d2d2d;
+            --light-bg: #f8f9fa;
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --accent-blue: #0056b3;
+            --transition-speed: 0.6s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            color: white;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            opacity: 0; /* For animation */
+            animation: fadeUp 1s forwards 0.5s;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+            color: #ccc;
+            opacity: 0;
+            animation: fadeUp 1s forwards 1s;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: transform 0.3s;
+            opacity: 0;
+            animation: fadeUp 1s forwards 1.5s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            background-color: #b30000;
+        }
+
+        /* --- SECTIONS GENERAL --- */
+        section {
+            padding: 80px 10%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--dark-bg);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 10px auto;
+        }
+
+        /* --- GRID LAYOUT (Experiences) --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+            color: var(--dark-bg);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card ul {
+            list-style-position: inside;
+            padding-left: 0;
+        }
+
+        .card li {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        /* --- LESSONS SECTION --- */
+        .lessons-section {
+            background-color: white;
+        }
+
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 5px solid var(--accent-blue);
+        }
+
+        .lesson-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-blue);
+            margin-right: 20px;
+            min-width: 50px;
+        }
+
+        /* --- REFLECTION --- */
+        .reflection {
+            background-color: var(--dark-bg);
+            color: white;
+            text-align: center;
+        }
+        
+        .reflection .section-title {
+            color: white;
+        }
+
+        .reflection p {
+            max-width: 800px;
+            margin: 0 auto 20px auto;
+            font-size: 1.1rem;
+            color: #ddd;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        /* --- ANIMATIONS (Scroll Reveal) --- */
+        .reveal {
+            position: relative;
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 1s ease;
+        }
+
+        .reveal.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; } 
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo"><img src="https://imgs.search.brave.com/l5qpBFw7_2snDOxWoTVd1K9BFmOtMOCVh_1KyOOX-Z8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly8xMDAw/bG9nb3MubmV0L3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDIyLzEx/L1Vuby1Mb2dvLTUw/MHgyODEucG5n" alt="UNO Logo" style="height: 40px;"></div>
+        <div class="nav-links">
+            <a href="#intro">Home</a>
+            <a href="#experiences">Experiences</a>
+            <a href="#lessons">Key Lessons</a>
+            <a href="#reflection">Reflection</a>
+        </div>
+    </nav>
+
+    <section class="hero" id="intro">
+        <h1>First Year Survival Guide</h1>
+        <p>Based on real experiences from my first semester at UNO. A practical guide to avoiding mistakes, using resources, and mastering independence.</p>
+        <a href="#experiences" class="btn">Start the Journey</a>
+    </section>
+
+    <section id="experiences">
+        <div class="reveal">
+            <h2 class="section-title">My First Semester</h2>
+            <div class="grid-container">
+                
+                <div class="card">
+                    <h3>⚠️ Challenges</h3>
+                    <ul>
+                        <li><strong>Time Management:</strong> Balancing work, classes, homework, and life was harder than expected.</li>
+                        <li><strong>Overloaded Schedule:</strong> I stretched myself too thin and couldn't attend clubs.</li>
+                        <li><strong>Adaptation:</strong> Trying to handle all new responsibilities instantly.</li>
+                    </ul>
+                </div>
+
+                <div class="card" style="border-left-color: #28a745;">
+                    <h3>✅ Successes</h3>
+                    <ul>
+                        <li><strong>Efficiency:</strong> Learned to prioritize tasks effectively.</li>
+                        <li><strong>Independence:</strong> Cooked complex meals and managed adult tasks (Taxes, Passport).</li>
+                        <li><strong>Routines:</strong> Built strong daily habits to stay organized.</li>
+                    </ul>
+                </div>
+
+                <div class="card" style="border-left-color: #ffc107;">
+                    <h3>💡 "Ah-ha" Moments</h3>
+                    <ul>
+                        <li><strong>Credit Scores:</strong> Realized their long-term impact on my future.</li>
+                        <li><strong>Financial Impact:</strong> Understood how early decisions affect future goals.</li>
+                        <li><strong>True Independence:</strong> Accepting I was on my own.</li>
+                    </ul>
+                </div>
+
+                <div class="card" style="border-left-color: #17a2b8;">
+                    <h3>📚 Resources</h3>
+                    <p><strong>Used:</strong> UNO Library (every Friday for study hours).</p>
+                    <br>
+                    <p><strong>Missed (Wish I joined):</strong></p>
+                    <ul>
+                        <li>Cybersecurity Club</li>
+                        <li>Volleyball Club</li>
+                        <li>Badminton Club</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="lessons" class="lessons-section">
+        <div class="reveal">
+            <h2 class="section-title">5 Lessons Learned the Hard Way</h2>
+            
+            <div class="lesson-item">
+                <span class="lesson-number">01</span>
+                <div>
+                    <h4>Don't Overload Your Schedule</h4>
+                    <p>Leave time for hobbies. Burnout is real.</p>
+                </div>
+            </div>
+
+            <div class="lesson-item">
+                <span class="lesson-number">02</span>
+                <div>
+                    <h4>Stop Procrastinating</h4>
+                    <p>It makes everything worse, specifically in a college environment where assignments pile up.</p>
+                </div>
+            </div>
+
+            <div class="lesson-item">
+                <span class="lesson-number">03</span>
+                <div>
+                    <h4>Create a 4-Year Plan Early</h4>
+                    <p>Know when you will finish. Don't just drift through semesters blindly.</p>
+                </div>
+            </div>
+
+            <div class="lesson-item">
+                <span class="lesson-number">04</span>
+                <div>
+                    <h4>Ask for Advice</h4>
+                    <p>Advisors, professors, and older students are there to help. Don't guess.</p>
+                </div>
+            </div>
+
+            <div class="lesson-item" style="border-left-color: #dc3545; background-color: #fff5f5;">
+                <span class="lesson-number" style="color: #dc3545;">!!</span>
+                <div>
+                    <h4>If you get a Scooter or Bike, Buy a U-Lock Immediately</h4>
+                    <p><strong>Crucial:</strong> Basic locks are easy to break. I learned this after my bike was stolen.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="reflection" class="reflection">
+        <div class="reveal">
+            <h2 class="section-title">Why This Matters</h2>
+            <p>These lessons helped me avoid repeating mistakes and understand the level of responsibility required in college.</p>
+            <p>Time management prevented burnout. Understanding college credit showed me the value of future planning.</p>
+            <br>
+            <p style="font-weight: bold; color: var(--primary-color);">My goal is to help you save time, reduce stress, and avoid unnecessary problems.</p>
+        </div>
+    </section>
+
+    <footer>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Intersection Observer for Scroll Animations
+        window.addEventListener('scroll', reveal);
+
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal');
+
+            for (var i = 0; i < reveals.length; i++) {
+                var windowheight = window.innerHeight;
+                var revealtop = reveals[i].getBoundingClientRect().top;
+                var revealpoint = 150;
+
+                if (revealtop < windowheight - revealpoint) {
+                    reveals[i].classList.add('active');
+                } else {
+                    reveals[i].classList.remove('active');
+                }
+            }
+        }
+        
+        // Trigger once on load to show visible elements
+        reveal();
+    </script>
+
+</body>
+</html>
